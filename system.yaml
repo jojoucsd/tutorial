@@ -1,4 +1,4 @@
-namespace: /moncc-tutorial
+namespace: /yourname
 
 tutorial-mongo:
     defines: runnable
@@ -6,23 +6,23 @@ tutorial-mongo:
 
 tutorial-app:
     defines: runnable
-    inherits: moncc-tutorial/app
+    inherits: yourname/app
     variables:
         port: 9090
-        db-host: <- get-container-ip("moncc-tutorial/tutorial-mongo", "database")
+        db-host: <- get-container-ip("yourname/tutorial-mongo", "database")
 
 tutorial-nginx:
     defines: runnable
     inherits: nginx/reverse-proxy
     variables:
         server-name: tutorial-app.moncc.io
-        listen-port: 8080
-        proxy-target-host: <- get-container-ip("moncc-tutorial/tutorial-app", "app")
+        listen-port: 8000
+        proxy-target-host: <- get-container-ip("yourname/tutorial-app", "app")
         proxy-target-port: 9090
 
 system:
     defines: process-group
     runnable-list:
-        - /moncc-tutorial/tutorial-mongo
-        - /moncc-tutorial/tutorial-app
-        - /moncc-tutorial/tutorial-nginx
+        - /yourname/tutorial-mongo
+        - /yourname/tutorial-app
+        - /yourname/tutorial-nginx
